@@ -13,9 +13,47 @@ export default class Users extends Component {
                 {name:'David',course:'React'},
                 {name:'Kevin',course:'React'},
                 {name:'Austin',course:'React'}
-            ]
+            ],
+            isUserVisible :true
         }
+        console.log("I am in a constructor");
     }
+
+    static getDerivedStateFromProps(props,state){
+        console.log("I am in a getDerivedStateFromProps");
+        return {
+            count:props.count
+        };
+    }
+
+    componentDidMount(){
+        debugger
+        console.log("I am in a componentDidMount");
+        setTimeout(()=>{
+            this.setState({
+                isUserVisible:false
+            })
+        },3000
+        
+        )
+       
+
+    }
+
+    shouldComponentUpdate(){
+        console.log("I am in a shouldComponentUpdate");
+        return true;
+    }
+
+    getSnapshotBeforeUpdate(){
+        console.log("I am in a getSnapshotBeforeUpdate");
+        return null;
+    }
+
+    componentDidUpdate(){
+        console.log("I am in a componentDidUpdate");
+    }
+      
   onIncreaseCount = (e,p) =>{
       console.log("You clicked on Increase Count");
    //   this.state.count = this.state.count + 1;
@@ -39,7 +77,7 @@ export default class Users extends Component {
   }
 
   render() {
-    console.log(this.props);
+    console.log("I am in a render");
 
     const{count,listofUsers} = this.state;
     const userParam ='Events Handler'
@@ -48,19 +86,21 @@ export default class Users extends Component {
      
       <h1>
        { this.props.children} </h1>
-        <h2>{this.props.count}</h2>
+        <h2> From Parent :{this.props.count}</h2>
         <h2>{this.props.subtitle}</h2>
 
-        <h2>Count :{this.state.count}</h2>
+        <h2> STATE Count :{this.state.count}</h2>
 
         {
+            this.state.isUserVisible
+            ?
             listofUsers.map((element,index) => {
                 return(
-                    
-                        <User key={index} name={element.name} course={element.course} userId={index} />
-                    
+                      <User key={index} name={element.name} course={element.course} userId={index} />
                 )
             } )
+            :
+            null
         }
         
         <button onClick={(e) => {this.onIncreaseCount(userParam)}} >Increase Count</button>

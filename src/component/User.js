@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 export default class User extends Component {
+  
+    componentWillUnmount(){
+        debugger
+    }
   render() {
     return (
       <div>
